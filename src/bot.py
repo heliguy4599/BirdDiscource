@@ -60,10 +60,11 @@ async def on_message(message):
 		await handle_reply(message, await message.channel.fetch_message(message.reference.message_id))
 		
 	# Allow for links to bypass this system if a user so chooses
-	if "!http" in message.content or "<http":
+	if "!http" in message.content or "<http" in message.content:
 		return
 		
 	for link in client.targeted_links:
+		print("guh loop")
 		if link in message.content:
 			text = f"-# 🛈 *Message originally from:*  {message.author.mention}\n"
 			await message.channel.send(text + message.content.replace(link, client.targeted_links[link]))
